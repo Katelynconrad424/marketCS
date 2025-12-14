@@ -1,7 +1,10 @@
 import pg from "pg";
-const client = new pg.Client(
-  process.env.DATABASE_URL || "postgres://localhost/marketcs"
-);
+const { Client } = pg;
+
+const db = new Client({
+  connectionString: process.env.DATABASE_URL,
+});
+
 export default db;
 
-module.exports = client;
+module.exports = Client;
