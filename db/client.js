@@ -6,5 +6,3 @@ const db = new Client({
 });
 
 export default db;
-
-module.exports = Client;
