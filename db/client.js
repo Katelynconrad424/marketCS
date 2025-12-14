@@ -1,8 +1,9 @@
 import pg from "pg";
 const { Client } = pg;
 
-const db = new Client({
+const client = new Client({
   connectionString: process.env.DATABASE_URL,
+  options: "-c search_path=public",
 });
 
-export default db;
+export default client;
