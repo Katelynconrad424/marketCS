@@ -89,25 +89,8 @@ router.post("/:id/products", requireUser, async (req, res) => {
 router.get("/:id/products", requireUser, async (req, res) => {
   const orderResult = await db.query("SELECT * FROM orders WHERE id = $1", [
     req.params.id,
-  ]);
+  ])
+); 
 
-  const order = orderResult.rows[0];
-
-  if (!order) return res.status(404).json({ error: "Order not found" });
-  if (order.user_id !== req.user.id)
-    return res.status(403).json({ error: "Forbidden" });
-
-  const result = await db.query(
-    `
-    SELECT products.*, orders_products.quantity
-    FROM orders_products
-    JOIN products ON products.id = orders_products.product_id
-    WHERE orders_products.order_id = $1
-    `,
-    [req.params.id]
-  );
-
-  res.json(result.rows);
-});
 
 export default router;

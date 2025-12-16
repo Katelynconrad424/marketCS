@@ -27,15 +27,6 @@ router.get("/:id/orders", requireUser, async (req, res) => {
     return res.status(404).json({ error: "Product not found" });
   }
 
-  const sql = `
-    SELECT orders.*
-    FROM orders
-    JOIN orders_products
-      ON orders.id = orders_products.order_id
-    WHERE orders_products.product_id = $1
-      AND orders.user_id = $2
-  `;
-
   const result = await db.query(sql, [req.params.id, req.user.id]);
   res.json(result.rows);
 });
